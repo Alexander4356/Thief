@@ -10,14 +10,6 @@ public class AlarmTriggering : MonoBehaviour
     private float _targetVolume;
     private float _speed = 0.2f;
 
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    if (collision.gameObject.TryGetComponent(out Thief thief))
-    //    {
-    //        StartCoroutine(IncreaseVolume());
-    //    }
-    //}
-
     public IEnumerator IncreaseVolume()
     {
         _targetVolume = 1f;
@@ -29,14 +21,6 @@ public class AlarmTriggering : MonoBehaviour
             yield return null;
         }
     }
-
-    //private void OnTriggerExit2D(Collider2D collision)
-    //{
-    //    if (collision.gameObject.TryGetComponent(out Thief thief))
-    //    {
-    //        StartCoroutine(LowerVolume());
-    //    }
-    //}
 
     public IEnumerator LowerVolume()
     {
