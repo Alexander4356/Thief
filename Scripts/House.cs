@@ -14,6 +14,7 @@ public class House : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent(out ThiefMover mover))
         {
+            _audioSource.Play();
             StartCoroutine(IncreaseVolume());
         }
     }
@@ -29,7 +30,6 @@ public class House : MonoBehaviour
     private IEnumerator IncreaseVolume()
     {
         _targetVolume = 1f;
-        _audioSource.Play();
 
         while (_currentVolume <= _targetVolume)
         {
