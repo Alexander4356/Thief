@@ -10,46 +10,49 @@ public class AlarmTriggering : MonoBehaviour
     private float _targetVolume;
     private float _speed = 0.2f;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (collision.gameObject.TryGetComponent(out Thief thief))
+    //    {
+    //        StartCoroutine(IncreaseVolume());
+    //    }
+    //}
+
+    public IEnumerator IncreaseVolume()
     {
         _targetVolume = 1f;
-
-        if (collision.gameObject.TryGetComponent(out Thief thief))
-        {
-            StartCoroutine(IncreaseVolume());
-        }
-    }
-
-    private IEnumerator IncreaseVolume()
-    {
         _audioSource.Play();
 
         while (_currentVolume <= _targetVolume)
         {
-            _currentVolume = Mathf.MoveTowards(_currentVolume, _targetVolume, _speed * Time.deltaTime);
-            _audioSource.volume = _currentVolume;
+            VolumeChange(_targetVolume);
             yield return null;
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    //private void OnTriggerExit2D(Collider2D collision)
+    //{
+    //    if (collision.gameObject.TryGetComponent(out Thief thief))
+    //    {
+    //        StartCoroutine(LowerVolume());
+    //    }
+    //}
+
+    public IEnumerator LowerVolume()
     {
         _targetVolume = 0f;
 
-        if (collision.gameObject.TryGetComponent(out Thief thief))
-        {
-            StartCoroutine(LowerVolume());
-        }
-    }
-
-    private IEnumerator LowerVolume()
-    {
         while (_currentVolume > 0)
         {
-            _currentVolume = Mathf.MoveTowards(_currentVolume, _targetVolume, _speed * Time.deltaTime);
-            _audioSource.volume = _currentVolume;
+            VolumeChange(_targetVolume);
             yield return null;
         }
         _audioSource.Stop();
+    }
+
+    private void VolumeChange(float targetVolume)
+    {
+        _currentVolume = Mathf.MoveTowards(_currentVolume, targetVolume, _speed * Time.deltaTime);
+        _audioSource.volume = _currentVolume;
     }
 }
