@@ -9,35 +9,35 @@ public class Alarm : MonoBehaviour
     private float _targetVolume;
     private float _currentVolume = 0f;
     private float _speed = 0.2f;
-    private bool _start = false;
+    private Coroutine _currentCoroutine;
 
     public void IncreseVolume()
     {
         _targetVolume = 1f;
+        _audioSource.Play();
 
-        if (_start != true)
-        {
-            _start = true;
-            _audioSource.Play();
-            StartCoroutine(ChangeVolume(_targetVolume));
-            _start = false;
-        }
+        CheckCoroutine();
+        _currentCoroutine = StartCoroutine(ChangeVolume(_targetVolume));
     }
 
     public void LowerVolume()
     {
         _targetVolume = 0f;
 
-        if (_start != true)
-        {
-            _start = true;
-            StartCoroutine(ChangeVolume(_targetVolume));
-            _start = false;
-        }
+        CheckCoroutine();
+        _currentCoroutine = StartCoroutine(ChangeVolume(_targetVolume));
 
         if (_audioSource.volume == 0)
         {
             _audioSource.Stop();
+        }
+    }
+
+    private void CheckCoroutine()
+    {
+        if (_currentCoroutine != null)
+        {
+            StopCoroutine(_currentCoroutine);
         }
     }
 
